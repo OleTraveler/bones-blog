@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Chiropractic</title>
+    <link>http://oletraveler.github.io/bones/</link>
+    <description>Recent content on Chiropractic</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 31 Jul 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://oletraveler.github.io/bones/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>1. &#34;GADT (Generalized Abstract Data Types) Basics&#34;</title>
+      <link>http://oletraveler.github.io/bones/posts/gadt-basics/</link>
+      <pubDate>Tue, 31 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://oletraveler.github.io/bones/posts/gadt-basics/</guid>
+      <description>Algebraic Data Type (ADT) Algebraic Data type (ADT) is a type (or class) for objects whose behavior is defined by a set of value and a set of operations. The definition of ADT only mentions what operations are to be performed but not how these operations will be implemented. Citation
+In scala, this is just a sum type:
+sealed trait Expr case class I(i: Int) extends Expr case class B(b: Boolean) extends Expr case class Add(a: Expr, b: Expr) extends Expr case class Mul(a: Expr, b: Expr) extends Expr case class Eq(a: Expr, b: Expr) extends Expr  Generalized Algebraic Datatypes (GADTs) Generalized algebraic datatypes (GADTs) are very similar to ADTs, however they also include a type parameter in the signature of the trait.</description>
+    </item>
+    
+  </channel>
+</rss>

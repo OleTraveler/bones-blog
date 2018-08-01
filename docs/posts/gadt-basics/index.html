@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+         
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>1. &#34;GADT (Generalized Abstract Data Types) Basics&#34;</title>
+        
+        <style>
+
+    html body {
+        font-family: 'Merriweather', sans-serif;
+        background-color: white;
+    }
+
+    :root {
+        --accent: green;
+        --border-width:  5px ;
+    }
+
+</style>
+
+
+<link rel="stylesheet" href="http://oletraveler.github.io/bones/css/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merriweather">
+
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"> 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script> 
+
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script>
+ <meta name="generator" content="Hugo 0.45.1" />
+        
+
+        
+    </head>
+
+    
+    
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    
+
+    <body>
+         
+        <nav class="navbar navbar-default navbar-fixed-top">
+
+            <div class="container">
+
+                <div class="navbar-header">
+
+                    <a class="navbar-brand visible-xs" href="#">1. &#34;GADT (Generalized Abstract Data Types) Basics&#34;</a>
+
+                    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                </div>
+
+                <div class="collapse navbar-collapse">
+
+                    
+                        <ul class="nav navbar-nav">
+                            
+                                <li><a href="/bones/">Blog Home</a></li>
+                            
+                                <li><a href="/bones/posts/">Posts</a></li>
+                            
+                                <li><a href="https://github.com/OleTraveler/bones">Bones</a></li>
+                            
+                        </ul>
+                    
+
+                    
+                        <ul class="nav navbar-nav navbar-right">
+                            
+                                <li class="navbar-icon"><a href="https://github.com/OleTraveler/"><i class="fa fa-github"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://twitter.com/Ole_Traveler"><i class="fa fa-twitter"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://www.linkedin.com/in/travisstevens/"><i class="fa fa-linkedin"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://www.stackoverflow.com/users/387094/oletraveler"><i class="fa fa-stack-overflow"></i></a></li>
+                            
+                        </ul>
+                    
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+<main>
+
+    <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/bones/posts/gadt-basics/">1. &#34;GADT (Generalized Abstract Data Types) Basics&#34;</a></h4>
+    <h5>July 31, 2018</h5>
+    
+
+</div>
+
+
+    <br> <div class="text-justify">
+
+<h2 id="algebraic-data-type-adt">Algebraic Data Type (ADT)</h2>
+
+<p>Algebraic Data type (ADT) is a type (or class) for objects whose behavior is defined by a set of value and a set of operations.
+The definition of ADT only mentions what operations are to be performed but not how these operations will be implemented. <a href="https://www.geeksforgeeks.org/abstract-data-types/">Citation</a></p>
+
+<p>In scala, this is just a sum type:</p>
+
+<pre><code class="language-scala">sealed trait Expr
+case class I(i: Int) extends Expr
+case class B(b: Boolean) extends Expr
+case class Add(a: Expr, b: Expr) extends Expr
+case class Mul(a: Expr, b: Expr) extends Expr
+case class Eq(a: Expr, b: Expr) extends Expr
+</code></pre>
+
+<h2 id="generalized-algebraic-datatypes-gadts">Generalized Algebraic Datatypes (GADTs)</h2>
+
+<p>Generalized algebraic datatypes (GADTs) are very similar to ADTs, however they also include a type parameter in the signature of the trait.
+The addition of the type parameter allows the GADT to track the type of the expression, without referencing it within the class.
+(Note that in Scala, Free Monad Algebras are coded as GADTs.)</p>
+
+<pre><code class="language-scala">trait Expr[A]
+case class I(i: Int) extends Expr[Int]
+case class B(b: Boolean) extends Expr[Boolean]
+case class Add(a: Expr[Int], b: Expr[Int]) extends Expr[Int]
+case class Mul(a: Expr[Int], b: Expr[Int]) extends Expr[Int]
+case class Eq(a: Expr[Boolean], b: Expr[Boolean]) extends Expr[Boolean]
+</code></pre>
+
+<p>An algebra is now defined that can used to build up programs without executing them.  Essentually, we are describing the program.</p>
+
+<pre><code class="language-scala">scala&gt; val intProgram = Add(I(5), Mul(I(3),I(2)))
+intProgram: Add = Add(I(5),Mul(I(3),I(2)))
+
+scala&gt; val boolProgram = Eq(B(true), B(true))
+boolProgram: Eq = Eq(B(true),B(true))
+</code></pre>
+
+<p>If the types do not match up, the compilation will fail as expected.</p>
+
+<pre><code class="language-scala">scala&gt; Add(I(5), Mul(I(3),B(true)))
+&lt;console&gt;:21: error: type mismatch;
+ found   : B
+ required: Expr[Int]
+       Add(I(5), Mul(I(3),B(true)))
+                           ^
+</code></pre>
+
+<p>We can then create an obvious interpreter which will execute the program description.</p>
+
+<pre><code class="language-scala">def eval[A](expr: Expr[A]): A =
+  expr match {
+    case I(i) =&gt; i
+    case B(b) =&gt; b
+    case Add(a,b) =&gt; eval(a) + eval(b)
+    case Mul(a,b) =&gt; eval(a) + eval(b)
+    case Eq(a,b) =&gt; eval(a) == eval(b)
+  }
+</code></pre>
+
+<pre><code class="language-scala">scala&gt; eval(intProgram)
+res1: Int = 10
+
+scala&gt; eval(boolProgram)
+res2: Boolean = true
+</code></pre>
+
+<p>We can also create an interpreter which describes the program.</p>
+
+<pre><code class="language-scala">def describe(expr: Expr[_]) : String =
+  expr match {
+    case I(i) =&gt; s&quot;Integer: $i&quot;
+    case B(b) =&gt; s&quot;Boolean: $b&quot;
+    case Add(a,b) =&gt; s&quot;Add( ${describe(a)} and ${describe(b)})&quot;
+    case Mul(a,b) =&gt; s&quot;Multiply( ${describe(a)} and ${describe(b)})&quot;
+    case Eq(a,b) =&gt; s&quot;Compare( ${describe(a)} and ${describe(b)})&quot;
+  }
+</code></pre>
+
+<pre><code class="language-scala">scala&gt; describe(intProgram)
+res3: String = Add( Integer: 5 and Multiply( Integer: 3 and Integer: 2))
+
+scala&gt; describe(boolProgram)
+res4: String = Compare( Boolean: true and Boolean: true)
+</code></pre>
+
+<p>And finally, the algabra can be converted to a different algebra as well.  In this case the type changes from Expr[A] to Description[A].
+This conversion is also known as a natural transformation.</p>
+
+<pre><code class="language-scala">case class Description[A](desc: String, expr: Expr[A])
+def describe2[A](expr: Expr[A]): Description[A] =
+  expr match {
+    case exp@I(i) =&gt; Description[A](s&quot;Integer: $i&quot;, exp)
+    case exp@B(b) =&gt; Description[A](s&quot;Boolean: $b&quot;, exp)
+    case exp@Add(a,b) =&gt; Description[A](s&quot;Add( ${describe(a)} and ${describe(b)}&quot;, exp)
+    case exp@Mul(a,b) =&gt; Description[A]( s&quot;Muliply( ${describe(a)} and ${describe(b)}&quot;, exp)
+    case exp@Eq(a,b) =&gt; Description[A](s&quot;Compare( ${describe(a)} and ${describe(b)})&quot;, exp)
+  }
+</code></pre>
+
+<pre><code class="language-scala">scala&gt; describe2(intProgram)
+res5: Description[Int] = Description(Add( Integer: 5 and Multiply( Integer: 3 and Integer: 2),Add(I(5),Mul(I(3),I(2))))
+
+scala&gt; describe2(boolProgram)
+res6: Description[Boolean] = Description(Compare( Boolean: true and Boolean: true),Eq(B(true),B(true)))
+</code></pre>
+
+<h2 id="recap">Recap</h2>
+
+<p>In this post, we&rsquo;ve described what a GADT is and how it is different from an ADT.  We&rsquo;ve shown how a GADT can be interpretered or go through a natural transformation.</p>
+
+<p>This page is a port of the (Haskell GADT Wiki Page)[<a href="https://en.wikibooks.org/wiki/Haskell/GADT">https://en.wikibooks.org/wiki/Haskell/GADT</a>]</p>
+</div>
+
+    
+    
+
+    
+
+    
+
+        <h4 class="page-header">Comments</h4>
+
+        <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "OleTraveler" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+
+</main>
+
+        <footer>
+
+            <p class="copyright text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://github.com/calintat/minimal">Minimal</a></p>
+
+        </footer>
+       
+    </body>
+
+</html>
+

@@ -1,3 +1,68 @@
-baseURL = "http://example.org/"
+baseURL = "http://oletraveler.github.io/bones/"
 languageCode = "en-us"
-title = "My New Hugo Site"
+title = "Chiropractic"
+theme = "minimal"
+disqusShortname = "OleTraveler" # delete this to disable disqus comments
+googleAnalytics = ""
+publishDir = "docs"
+
+[params]
+    author = "Travis Stevens"
+    description = "A companion blog to the Bones project"
+    githubUsername = "#OleTraveler"
+    accent = "green"
+    showBorder = true
+    backgroundColor = "white"
+    font = "Merriweather" # should match the name on Google Fonts!
+    highlight = true
+    highlightStyle = "solarized-dark"
+    highlightLanguages = ["scala"]
+
+[[menu.main]]
+    url = "https://github.com/OleTraveler/bones"
+    name = "Bones"
+    weight = 4 
+
+[[menu.main]]
+    url = "/"
+    name = "Blog Home"
+    weight = 1
+
+[[menu.main]]
+    url = "/posts/"
+    name = "Posts"
+    weight = 2
+
+#[[menu.main]]
+    #url = "/project/"
+    #name = "Projects"
+    #weight = 3
+
+# Social icons to be shown on the right-hand side of the navigation bar
+# The "name" field should match the name of the icon to be used
+# The list of available icons can be found at http://fontawesome.io/icons/
+
+#[[menu.icon]]
+    #url = "mailto:me@example.com"
+    #name = "envelope-o"
+    #weight = 1
+
+[[menu.icon]]
+    url = "https://github.com/OleTraveler/"
+    name = "github"
+    weight = 2
+
+[[menu.icon]]
+    url = "https://twitter.com/Ole_Traveler"
+    name = "twitter"
+    weight = 3
+
+[[menu.icon]]
+    url = "https://www.linkedin.com/in/travisstevens/"
+    name = "linkedin"
+    weight = 4
+
+[[menu.icon]]
+    url = "https://www.stackoverflow.com/users/387094/oletraveler"
+    name = "stack-overflow"
+    weight = 5
