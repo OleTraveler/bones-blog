@@ -1,7 +1,5 @@
 To generate blog run
 
 `sbt tut`
-
-And then
-
+`cp ./target/scala-2.12/tut/*md content/posts/`
 `hugo`

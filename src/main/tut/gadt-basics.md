@@ -1,6 +1,5 @@
 ---
-title: 1. "GADT (Generalized Abstract Data Types) Basics"
-date: 2018-07-31
+title: 1. GADT (Generalized Abstract Data Types) Basics
 draft: false
 ---
 

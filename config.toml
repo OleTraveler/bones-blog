@@ -1,10 +1,9 @@
-baseURL = "http://oletraveler.github.io/bones/"
+baseURL = "https://oletraveler.github.io/bones/"
 languageCode = "en-us"
 title = "Chiropractic"
 theme = "minimal"
-disqusShortname = "OleTraveler" # delete this to disable disqus comments
-googleAnalytics = ""
-publishDir = "docs"
+disqusShortname = "https-oletraveler-github-io-bones" # delete this to disable disqus comments
+googleAnalytics = "UA-123151675-1"
 
 [params]
     author = "Travis Stevens"
